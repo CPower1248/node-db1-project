@@ -24,7 +24,9 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-
+    const { body } = req
+    const data = await Account.insert(body)
+    res.status(200).json(data)
   } catch (err) {
     next(err)
   }
@@ -32,7 +34,10 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-
+    const { id } = req.params
+    const { body } = req
+    const data = await Account.update(id, body)
+    res.status(200).json(data)
   } catch (err) {
     next(err)
   }
@@ -40,7 +45,9 @@ router.put("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
-
+    const { id } = req.params
+    await Account.remove(id)
+    res.status(200).json({ message: `Account with id ${id} has been deleted` })
   } catch (err) {
     next(err)
   }
